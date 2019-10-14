@@ -1,6 +1,4 @@
-
 import React, { Component } from 'react'
-
 
 class Signup extends Component{
 
@@ -48,7 +46,7 @@ class Signup extends Component{
     </div>
     <div class="field">
       <label>Last Name</label>
-      <input type="text"></input>
+      <input type="text" placeholder="lastname"></input>
     </div>
   
   <div class="fields">

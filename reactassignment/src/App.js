@@ -3,7 +3,9 @@ import HeaderElement from './UI/headerElement/headerElement';
 import './App.css';
 import { BrowserRouter,Route } from 'react-router-dom';
 import Signup from './UI/signup/signup';
-import Login from './UI/login/login';
+//import Login from './UI/login/login';
+import Auth from './container/Auth/Auth';
+import AuthSignup from './container/AuthSignup/AuthSignup';
 
 function App() {
   return (
@@ -15,8 +17,8 @@ function App() {
         <Route path = "/aboutus" render={(() =><h1> About Us</h1> )}/>
         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
 
-        <Route exact path = "/signup" component={() => <Signup/>} />
-        <Route exact path = "/login" component={() => <Login/>}/>
+        <Route exact path = "/signup" component={() => <AuthSignup/>} />
+        <Route exact path = "/login" component={() => <Auth/>}/>
 
       </BrowserRouter>
     </div>
