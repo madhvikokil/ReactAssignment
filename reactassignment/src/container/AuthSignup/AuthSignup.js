@@ -87,7 +87,7 @@ submitHandler =(event) => {
         .then(response => {
             this.authTransfer(formData.email,formData.password);
             console.log("response",response);
-            Axios.get('www.facebook.com');
+            // Axios.get('www.facebook.com');
      
         }) .catch(error => {
             console.log("error");
@@ -161,11 +161,11 @@ render() {
                 ))}
                
                 <br/>
-                <button onClick={this.submitHandler}
-                    // disabled={!this.state.formIsVaild}
-                    >
-                    SUBMIT
-                    </button>
+                
+                <button class="ui button" type="button" onClick={this.submitHandler}>Sign up </button>
+                    {/* // disabled={!this.state.formIsVaild} */}
+                   
+                   
             </form>
         )
     return (

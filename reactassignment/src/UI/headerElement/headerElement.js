@@ -32,6 +32,12 @@ class HeaderElement extends Component {
             active={activeItem === 'contact us'}
             onClick={this.handleItemClick}
           />
+          <Menu.Item
+           as={Link} to='dashboard'
+            name='dashboard'
+            active={activeItem === 'dashboard'}
+            onClick={this.handleItemClick}
+          />
          <Button class="ui button" as={Link} to ='signup'>Sign Up</Button>
          <Button class="ui button" as={Link} to ='login'>Log In</Button>
         </Menu>

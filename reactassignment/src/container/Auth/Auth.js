@@ -2,6 +2,7 @@ import React,{Component} from  'react';
 import Input from '../../UI/Input/Input';
 import { connect }from 'react-redux';
 import * as actions from '../../store/actions/auth/auth';
+import { Link,Redirect } from 'react-router-dom';
 
 class Auth extends Component{
 
@@ -39,23 +40,19 @@ class Auth extends Component{
     }
 
     submitHandler = (event) => {
-        console.log(...this.state);
-     console.log("hello");
+     
      event.preventDefault();
-     console.log("email: "+this.state.controls.email.value);
-    console.log(this.state.controls.password.value);
-    console.log(this.state.controls.isSignup.value)
-     this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignup)
-
+    console.log("email: "+this.state.controls.email.value);
+    console.log("password: "+this.state.controls.password.value);
+    console.log("Signup: "+this.state.isSignup.value)
+     this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignup);
+    
  }
-   
-    orderHandler = () => {
-        console.log("order");
-    }
+ 
 
     inputChangedHandler = (event ,inputIdentifier) => {
         const updatedOrderForm = {
-            ...this.state.orderForm 
+            ...this.state.controls 
         }
        const updatedFormElement = {
         ... updatedOrderForm[inputIdentifier]
@@ -70,7 +67,7 @@ class Auth extends Component{
            formIsVaild=updatedOrderForm[inputIdentifier].valid && formIsVaild;
        }
        console.log(formIsVaild);
-       this.setState({orderForm:updatedOrderForm,formIsVaild:formIsVaild})
+       this.setState({controls:updatedOrderForm,formIsVaild:formIsVaild})
     }
 
     render(){
@@ -82,7 +79,7 @@ class Auth extends Component{
             })
         } 
         let form =(
-            <form onSubmit={this.orderHandler}>
+            <form>
                {formElementArray.map(formElement => (
                     <Input 
                     placeholder={this.state.controls.email.placeholder}
@@ -97,7 +94,10 @@ class Auth extends Component{
                     />
                 ))}
             <br/>
-            <button class="ui button" type="button" onClick={this.submitHandler}>Login</button>
+            <Link to="/dashboard" >
+                <button class="ui button" type="button" onClick={this.submitHandler}>Login</button>
+             </Link>
+          
                 </form>
         );
         return(
