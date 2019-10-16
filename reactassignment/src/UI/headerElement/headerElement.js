@@ -22,7 +22,7 @@ class HeaderElement extends Component {
           />
           <Menu.Item
            as={Link} to='aboutus'
-            name='about us'
+            name='aboutus'
             active={activeItem === 'about us'}
             onClick={this.handleItemClick}
           />
@@ -32,12 +32,7 @@ class HeaderElement extends Component {
             active={activeItem === 'contact us'}
             onClick={this.handleItemClick}
           />
-          <Menu.Item
-           as={Link} to='dashboard'
-            name='dashboard'
-            active={activeItem === 'dashboard'}
-            onClick={this.handleItemClick}
-          />
+         
          <Button class="ui button" as={Link} to ='signup'>Sign Up</Button>
          <Button class="ui button" as={Link} to ='login'>Log In</Button>
         </Menu>

@@ -1,7 +1,8 @@
 import React,{ Component } from 'react';
 import Input from '../../UI/Input/Input';
 import classes from './AuthSignup.css'
-import Axios from 'axios';
+import Axios from '../../axios-orders';
+import Auth from '../../store/actions/auth/auth';
 
 class AuthSignup extends Component {
 state = {
@@ -82,11 +83,14 @@ submitHandler =(event) => {
             formData[formElemenIdentifier] = this.state.orderForm[formElemenIdentifier].value;
 
         }
-         Axios.post('https://assignment-fef5e.firebaseio.com/data.json',formData)
+         Axios.post('/data.json',formData)
+        // Axios.post('/order.json?auth=' + token,formData)
         
         .then(response => {
             this.authTransfer(formData.email,formData.password);
             console.log("response",response);
+            document.write("Successfully Signed up");
+            
             // Axios.get('www.facebook.com');
      
         }) .catch(error => {
@@ -104,7 +108,7 @@ authTransfer = (email,password)  => {
             password : password,
             returnSecureToken : true
         }
-        Axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDI-DUbjGkvE9i3SMPohtz7y-xkTJaD6HQ',authData)
+        Axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA',authData)
         .then(response => {
             console.log(response.data);
             console.log("authenticate new ");

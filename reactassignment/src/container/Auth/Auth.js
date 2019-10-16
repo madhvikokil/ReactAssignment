@@ -2,7 +2,8 @@ import React,{Component} from  'react';
 import Input from '../../UI/Input/Input';
 import { connect }from 'react-redux';
 import * as actions from '../../store/actions/auth/auth';
-import { Link,Redirect } from 'react-router-dom';
+import { Link,Redirect, withRouter } from 'react-router-dom';
+
 
 class Auth extends Component{
 
@@ -46,9 +47,10 @@ class Auth extends Component{
     console.log("password: "+this.state.controls.password.value);
     console.log("Signup: "+this.state.isSignup.value)
      this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignup);
-    
+    this.props.history.push('/dashboard');
  }
- 
+
+
 
     inputChangedHandler = (event ,inputIdentifier) => {
         const updatedOrderForm = {
@@ -97,7 +99,7 @@ class Auth extends Component{
             <Link to="/dashboard" >
                 <button class="ui button" type="button" onClick={this.submitHandler}>Login</button>
              </Link>
-          
+            
                 </form>
         );
         return(
@@ -118,8 +120,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email,password,isSignup) =>  dispatch(actions.auth(email,password,isSignup))
+        onAuth: (email,password,isSignup) =>  dispatch(actions.auth(email,password,isSignup)),
+       
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Auth);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Auth));
 
