@@ -2,7 +2,7 @@ import React,{Component} from  'react';
 import Input from '../../UI/Input/Input';
 import { connect }from 'react-redux';
 import * as actions from '../../store/actions/auth/auth';
-import { Link,Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 
 class Auth extends Component{
@@ -47,7 +47,9 @@ class Auth extends Component{
     console.log("password: "+this.state.controls.password.value);
     console.log("Signup: "+this.state.isSignup.value)
      this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignup);
-    this.props.history.push('/dashboard');
+        // console.log("token: "+token);
+        // console.log("userId:" +userId);
+     this.props.history.push('/dashboard');
  }
 
 

@@ -3,6 +3,7 @@ import Input from '../../UI/Input/Input';
 import classes from './AuthSignup.css'
 import Axios from '../../axios-orders';
 import Auth from '../../store/actions/auth/auth';
+import { Redirect } from 'react-router-dom';
 
 class AuthSignup extends Component {
 state = {
@@ -69,34 +70,69 @@ state = {
     formIsValid:false
 }
 
-// when the data is to be submitted
-submitHandler =(event) => {
+// // when the data is to be submitted
+// submitHandler =(event) => {
+//     console.log("To be submited")
+//     event.preventDefault();
+//         const formData = {};
+        
+//       console.log("this.state.orderForm");
+//       console.log(this.state.orderForm);
+//         for(let formElemenIdentifier in this.state.orderForm){
+//             console.log("this.state.orderForm[formElemenIdentifier].value :");
+//             console.log(this.state.orderForm[formElemenIdentifier].value)
+//             formData[formElemenIdentifier] = this.state.orderForm[formElemenIdentifier].value;
+        
+
+//         }
+//          Axios.post('/data.json',formData)
+//         // Axios.post('/order.json?auth=' + token,formData)
+        
+//         .then(response => {
+//             this.authTransfer(formData.email,formData.password);
+//             console.log("response",response);
+//             document.write("Successfully Signed up");
+            
+//             // Axios.get('www.facebook.com');
+     
+//         }) .catch(error => {
+//             console.log("error");
+//         })
+       
+// }
+
+signUp = (event) =>{
+    
     console.log("To be submited")
     event.preventDefault();
-        const formData = {};
-        
-      console.log("this.state.orderForm");
-      console.log(this.state.orderForm);
-        for(let formElemenIdentifier in this.state.orderForm){
-            console.log("this.state.orderForm[formElemenIdentifier].value :");
-            console.log(this.state.orderForm[formElemenIdentifier].value)
-            formData[formElemenIdentifier] = this.state.orderForm[formElemenIdentifier].value;
-
+    const formData ={}
+    for(let formElemenIdentifier in this.state.orderForm){
+        console.log("this.state.orderForm[formElemenIdentifier].value :");
+        console.log(this.state.orderForm[formElemenIdentifier].value)
+        formData[formElemenIdentifier] = this.state.orderForm[formElemenIdentifier].value;
+    }
+    const authData= {
+        email : formData.email,
+        password : formData.password,
+        returnSecureToken : true
+    }
+    Axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA',authData)
+    .then(response=>{
+        console.log("google apis response",response.data);
+        return (response.data)
+    }).then(response => {
+        console.log("then 1", response);
+        const userData = {
+            email: authData,
+            fname: formData.name,
+            lname:formData.lname
         }
-         Axios.post('/data.json',formData)
-        // Axios.post('/order.json?auth=' + token,formData)
-        
-        .then(response => {
-            this.authTransfer(formData.email,formData.password);
-            console.log("response",response);
-            document.write("Successfully Signed up");
-            
-            // Axios.get('www.facebook.com');
-     
-        }) .catch(error => {
-            console.log("error");
-        })
-       
+        console.log("userData",userData);
+        Axios.put('/userData/'+response.localId+'.json',formData);
+        // <Redirect to="/login" />
+    }).catch(error=>{
+        alert("error in signup plz check");
+    })
 }
 
 // For Authentication the data is stored in Firebase
@@ -141,6 +177,7 @@ inputChangedHandler = (event ,inputIdentifier) => {
 
 
 render() {
+   
     const formElementArray =[];
         for(let key in this.state.orderForm){
             formElementArray.push({
@@ -166,11 +203,12 @@ render() {
                
                 <br/>
                 
-                <button class="ui button" type="button" onClick={this.submitHandler}>Sign up </button>
+                <button class="ui button" type="button" onClick={this.signUp}>Sign up </button>
                     {/* // disabled={!this.state.formIsVaild} */}
                    
                    
             </form>
+             
         )
     return (
         <div className="signup">

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import actions from '../../store/actions/auth/auth';
+import { submit } from '../../store/actions/auth/auth';
 // Require Editor JS files.
 import 'froala-editor/js/froala_editor.pkgd.min.js';
 import Axios from '../../axios-orders';
@@ -47,10 +47,11 @@ class HtmlEditor extends React.Component {
         console.log(this.state);
         const info = {
             title : this.state.title,
-            description: this.state.description
+            description: this.state.description,
+            userId:this.props.userId
         }
-        Axios.post('/data/text.json',info);
-        // this.props.dataHandler(info,this.props.token)
+        //Axios.post('/data/text.json',info);
+         this.props.dataHandler(info,this.props.token)
     }
 
 render(){
@@ -72,21 +73,22 @@ render(){
 }
 }
 
-// const mapStateToProps =(state) => {
-//     return{
-//         token: state.auth.token
-//     }
+const mapStateToProps =(state) => {
+    return{
+        token: state.red.token,
+        userId :state.red.userId   
+    }
     
-// }
+}
 
-// const mapDispatchToProps = (dispatch) => {
-//     return{
-//         dataHandler: (info,token) => dispatch(actions.dataSubmit(info,token))
-//     }
+const mapDispatchToProps = (dispatch) => {
+    return{
+        dataHandler: (info,token) => dispatch(submit(info,token))
+    }
 
 
-// }
+}
 
-export default HtmlEditor;
+export default connect(mapStateToProps,mapDispatchToProps)(HtmlEditor);
 
 

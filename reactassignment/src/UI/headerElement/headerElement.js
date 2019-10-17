@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Menu, Segment } from 'semantic-ui-react'
 import{Button} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class HeaderElement extends Component {
   state = { activeItem: 'home' }
@@ -23,18 +24,20 @@ class HeaderElement extends Component {
           <Menu.Item
            as={Link} to='aboutus'
             name='aboutus'
-            active={activeItem === 'about us'}
+            active={activeItem === 'aboutus'}
             onClick={this.handleItemClick}
           />
           <Menu.Item
            as={Link} to='contactus'
-            name='contact Us'
-            active={activeItem === 'contact us'}
+            name='contactus'
+            active={activeItem === 'contactus'}
             onClick={this.handleItemClick}
           />
-         
+{/* 
+         if(this.props.isAuthenticate) ?  */}
          <Button class="ui button" as={Link} to ='signup'>Sign Up</Button>
          <Button class="ui button" as={Link} to ='login'>Log In</Button>
+         <Button class="ui button" as={Link} to ='logout'>Log out</Button> 
         </Menu>
       </Segment>
 
@@ -43,4 +46,11 @@ class HeaderElement extends Component {
   }
 }
 
-export default HeaderElement;
+const mapStateToProps = state => {
+  return {
+    isAuthenticate :state.red.token !==null
+  }
+}
+
+
+export default connect(mapStateToProps)(HeaderElement);

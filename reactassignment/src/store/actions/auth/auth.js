@@ -1,20 +1,19 @@
 import Axios from '../../../axios-orders';
-
 import firebase from "firebase";
-
 import * as actionTypes from '../actionTypes';
 import { Route } from 'react-router-dom';
+import { tsPropertySignature } from '@babel/types';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA",
-    authDomain: "assignment-cms.firebaseapp.com",
-    databaseURL: "https://assignment-cms.firebaseio.com",
-    projectId: "assignment-cms",
-    storageBucket: "assignment-cms.appspot.com",
-    messagingSenderId: "525478083915",
-    appId: "1:525478083915:web:7f038755f69cbaf04ebcce",
-    measurementId: "G-7KEPVNLR0G"
-  };
+// const firebaseConfig = {
+//     apiKey: "AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA",
+//     authDomain: "assignment-cms.firebaseapp.com",
+//     databaseURL: "https://assignment-cms.firebaseio.com",
+//     projectId: "assignment-cms",
+//     storageBucket: "assignment-cms.appspot.com",
+//     messagingSenderId: "525478083915",
+//     appId: "1:525478083915:web:7f038755f69cbaf04ebcce",
+//     measurementId: "G-7KEPVNLR0G"
+//   };
 
 export const authStart =() => {
     return{
@@ -39,45 +38,51 @@ export const authFail =(error) => {
     }
 }
 
-// export const dataSubmit =(info,token) => {
-//     const obj ={
-//         info:info,
-//         token:token
-//     }
-//     return dispatch =>{
-//         //dispatch(authSuccess(response.data.idToken,response.data.localId));
-//       Axios.post('/data.json?auth=' + token,obj)
-//         .then (response => {
-//             console.log(response.data);
-         
-//         })
-           
-//         .catch ( error => {
-//        console.log(error);
-//     });
-//     }
-// }
-// export const checkOutTimeout =(expiration) => {
-//     return dispatch=>{
-//          setTimeout(() => {
-//             dispatch(logout());
-//          },expiration * 1000)
-//     }
+
+export const checkOutTimeout =(expiration) => {
+    return dispatch=>{
+         setTimeout(() => {
+            dispatch(logout());
+         },expiration * 1000)
+    }
+}
+
+export const logout =() => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+    localStorage.removeItem('userId');
+    return {
+        type:actionTypes.AUTH_LOGOUT
+    }
+}
+
+// export const fetchOrders = (token,userId) => {
+//     console.log("In fetchOrders");
+//     console.log("token: "+token);
+//     console.log("userId: "+userId);
 // }
 
-// export const logout =() => {
-//     localStorage.removeItem('token');
-//     localStorage.removeItem('expiration');
-//     localStorage.removeItem('userId');
-//     return {
-//         type:actionTypes.AUTH_LOGOUT
-//     }
-// }
+export const submit =(info,token) => {
+    
+
+    return dispatch =>{
+        
+        //dispatch(authSuccess(response.data.idToken,response.data.localId));
+      Axios.post('/newPosts.json?auth=' + token,info)
+        .then (response => {
+            alert("hi");
+            console.log(response.data);
+         })
+           
+        .catch ( error => {
+       console.log(error);
+    });
+    }
+}
+
 
 export const auth = (email,password,isSignup)=>{
     return dispatch => {
-
-        // => new Promise(res, rej) => 
        
         const authData = {
             email:email,
@@ -100,13 +105,16 @@ export const auth = (email,password,isSignup)=>{
                 localStorage.setItem('token',response.data.idToken);
                 localStorage.setItem('expirationDate',expirationDate);
                 localStorage.setItem('userId',response.data.localId);
-                 localStorage.setItem('userId',response.data.localId);
+               
                 dispatch(authSuccess(response.data.idToken,response.data.localId));
+                
                 //dispatch(checkOutTimeout(response.data.expiresIn));
 
             })
             .catch(err=> {
                 console.log(err);
+                alert("Invalid User");
+                console.log("Invalid User");
                 console.log("error response")
                
                
@@ -115,22 +123,22 @@ export const auth = (email,password,isSignup)=>{
 }
 
 
-// export const authCheckState =()=> {
-//     return dispatch => {
-//         const token = localStorage.getItem('token')
+export const authCheckState =()=> {
+    return dispatch => {
+        const token = localStorage.getItem('token')
 
-//         if(!token) {
-//             dispatch(logout());
-//         } else {
-//             const expirationDate = new Date(localStorage.getItem('expirationDate'))
-//             if(expirationDate <= new Date()) {
-//                 dispatch(logout());
-//             } else {
-//                 const userId = localStorage.getItem('userId')
-//                 dispatch(authSuccess(token,userId))
-//                 dispatch(checkOutTimeout((expirationDate.getTime() - new Date().getTime())/ 1000))
-//             }
+        if(!token) {
+            dispatch(logout());
+        } else {
+            const expirationDate = new Date(localStorage.getItem('expirationDate'))
+            if(expirationDate <= new Date()) {
+                dispatch(logout());
+            } else {
+                const userId = localStorage.getItem('userId')
+                dispatch(authSuccess(token,userId))
+                dispatch(checkOutTimeout((expirationDate.getTime() - new Date().getTime())/ 1000))
+            }
            
-//         }
-//     }
-// }
+        }
+    }
+}

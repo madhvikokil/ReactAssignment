@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { createStore,applyMiddleware,compose ,combineReducers} from 'redux';
-import reducer from './store/reducers/reducer';
+import reducer from './store/reducers/auth';
 import 'semantic-ui/dist/semantic.min.css';
 import thunk from 'redux-thunk';
 import authReducer from './store/reducers/reducer';
@@ -17,6 +17,7 @@ const rootReducer = combineReducers({
   authRed : authReducer
 })
 const store = createStore(rootReducer,composeEnhancer(applyMiddleware(thunk)));
+window.myStore = store;
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
