@@ -27,7 +27,9 @@ class HtmlEditor extends React.Component {
 
     state ={
         title : '',
-        description: ''
+        description: '',
+        createdDate:'',
+        updatedDate:''
     }
 
     updateInput =(event) => {
@@ -48,7 +50,9 @@ class HtmlEditor extends React.Component {
         const info = {
             title : this.state.title,
             description: this.state.description,
-            userId:this.props.userId
+            userId:this.props.userId,
+            createdDate:new Date(),
+            updatedDate:new Date()
         }
         //Axios.post('/data/text.json',info);
          this.props.dataHandler(info,this.props.token)

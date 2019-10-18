@@ -1,9 +1,13 @@
 import React from 'react';
+import HtmlEditor from '../htmlEditor/htmlEditor';
 
 class AddPost extends React.Component {
     render(){
         return(
-            <h1> Add new Post </h1>
+           <div>
+                <h1> Add new Post </h1>
+                <HtmlEditor />
+            </div>
         )
 }
 }

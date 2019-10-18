@@ -8,7 +8,7 @@ import * as actions from './store/actions/auth/auth';
 import Auth from './container/Auth/Auth';
 import AuthSignup from './container/AuthSignup/AuthSignup';
 import Dashboard from './component/dashboard/dashboard';
-
+import AddPost from './component/addPost/addPost';
 
 class App extends React.Component{
   componentDidMount() {
@@ -36,9 +36,10 @@ render(){
         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
         <Route path = "/dashboard" component={() => <Dashboard />}/>
         <Route path = "/signup" component={() => <AuthSignup/>} />
-        
+        <Route path = "/AddPost" component={() => <AddPost/>} />
         <Route path = "/login" component={() => <Auth/>}/>
         <Route path = "/logout" component={() => <Logout/>} />
+        
                
         </Switch>
 

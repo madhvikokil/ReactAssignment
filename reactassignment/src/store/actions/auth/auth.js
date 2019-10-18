@@ -2,7 +2,7 @@ import Axios from '../../../axios-orders';
 import firebase from "firebase";
 import * as actionTypes from '../actionTypes';
 import { Route } from 'react-router-dom';
-import { tsPropertySignature } from '@babel/types';
+import { Redirect,Link } from 'react-router-dom';
 
 // const firebaseConfig = {
 //     apiKey: "AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA",
@@ -63,14 +63,12 @@ export const logout =() => {
 // }
 
 export const submit =(info,token) => {
-    
-
     return dispatch =>{
         
         //dispatch(authSuccess(response.data.idToken,response.data.localId));
       Axios.post('/newPosts.json?auth=' + token,info)
         .then (response => {
-            alert("hi");
+            alert("Data Added Successfully");
             console.log(response.data);
          })
            
@@ -99,7 +97,15 @@ export const auth = (email,password,isSignup)=>{
         Axios.post(url,authData)
             .then(response => {
                 console.log(response);
-                console.log("Successfully Logged...");         
+                console.log("Successfully Logged...");  
+                // .then(function (response) {
+                //     console.log(response);
+                //     console.log("success...");
+                //     if(response.status == 200){
+                //     //  <Link to="/dashboard"/> 
+                //     // history.push("/add");
+                //     console.log("Success");
+                //     }     
                
                 const expirationDate = new Date(new Date() .getTime()+ response.data.expiresIn * 1000);
                 localStorage.setItem('token',response.data.idToken);
@@ -114,6 +120,7 @@ export const auth = (email,password,isSignup)=>{
             .catch(err=> {
                 console.log(err);
                 alert("Invalid User");
+                // <Redirect to ="/login"/>
                 console.log("Invalid User");
                 console.log("error response")
                

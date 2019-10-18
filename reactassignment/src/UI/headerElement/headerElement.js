@@ -35,9 +35,9 @@ class HeaderElement extends Component {
           />
 {/* 
          if(this.props.isAuthenticate) ?  */}
-         <Button class="ui button" as={Link} to ='signup'>Sign Up</Button>
-         <Button class="ui button" as={Link} to ='login'>Log In</Button>
-         <Button class="ui button" as={Link} to ='logout'>Log out</Button> 
+         <Button class="ui button" as={Link} to ='/signup'>Sign Up</Button>
+         <Button class="ui button" as={Link} to ='/login'>Log In</Button>
+         <Button class="ui button" as={Link} to ='/logout'>Log out</Button> 
         </Menu>
       </Segment>
 

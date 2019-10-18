@@ -46,11 +46,16 @@ class Auth extends Component{
     console.log("email: "+this.state.controls.email.value);
     console.log("password: "+this.state.controls.password.value);
     console.log("Signup: "+this.state.isSignup.value)
-     this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignup);
-        // console.log("token: "+token);
+     this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.state.isSignup)
+      // console.log("token: "+token);
         // console.log("userId:" +userId);
      this.props.history.push('/dashboard');
- }
+    // .then(response => {
+    //     console.log(response);
+    //     // <Link to ="/dashboard"/>
+   
+//    
+    }
 
 
 

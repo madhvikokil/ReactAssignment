@@ -129,7 +129,8 @@ signUp = (event) =>{
         }
         console.log("userData",userData);
         Axios.put('/userData/'+response.localId+'.json',formData);
-        // <Redirect to="/login" />
+        alert("Signed up Successfully");
+      
     }).catch(error=>{
         alert("error in signup plz check");
     })

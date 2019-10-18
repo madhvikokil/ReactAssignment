@@ -8,13 +8,15 @@ import { createStore,applyMiddleware,compose ,combineReducers} from 'redux';
 import reducer from './store/reducers/auth';
 import 'semantic-ui/dist/semantic.min.css';
 import thunk from 'redux-thunk';
+import order from './store/reducers/lists';
 import authReducer from './store/reducers/reducer';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   red : reducer,
-  authRed : authReducer
+  authRed : authReducer,
+  ord : order
 })
 const store = createStore(rootReducer,composeEnhancer(applyMiddleware(thunk)));
 window.myStore = store;

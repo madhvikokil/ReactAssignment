@@ -1,0 +1,13 @@
+.box {
+    box-sizing: border-box;
+    box-shadow: black;
+    
+}
+
+table {
+    
+    margin-left: 20px;
+    margin-top:20px;
+    text-align: left;
+}
+
