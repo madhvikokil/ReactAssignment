@@ -132,7 +132,7 @@ signUp = (event) =>{
         alert("Signed up Successfully");
       
     }).catch(error=>{
-        alert("error in signup plz check");
+        // alert("error in signup plz check");
     })
 }
 

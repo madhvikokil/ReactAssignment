@@ -27,7 +27,7 @@ export const fetchOrders = (token,userId) => {
                    });
                }
                dispatch(fetchOrdersSuccess(fetchedOrders));
-                 this.setState({orders:fetchedOrders})
+                 //this.setState({orders:fetchedOrders})
             })
             .catch(error => {
                 // dispatch(fetchOrdersFail(error))

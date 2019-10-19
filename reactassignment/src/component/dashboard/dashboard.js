@@ -28,7 +28,6 @@ class Dashboard extends React.Component{
                 <Route path="/addPost" exact />
                     <Link to="/addPost">
                     <button >+ ADD </button></Link><br/><br/>
-                    <List />
                <Lists />
                
             </div> 

@@ -5,43 +5,26 @@ import {connect}from 'react-redux';
 //import withErrorHandler from '../../hoc/withErrorHandler';
 import {fetchOrders} from '../../store/actions/lists/lists';
 //import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-
-const Lists = props => {
+class Lists extends React.Component{
+    componentDidMount () {
+        this.props.onFetchOrders(this.props.token,this.props.userId);
+    }
    
-   useEffect(() => {
-    props.onFetchOrders(props.token,props.userId);
-   },[])
+    render(){
       
-
-    
-        let list= props.list.map(l => (      //array to array of JSX
-                    <List key={l.id} 
+        let posts = this.props.list.map(l => (      //array to array of JSX
+                    <List 
+                     id={l.id} 
                      title={l.title}
                      description={l.description}/>
                 ))
-            
-            
-        
-        return(
-            <div>{
-                props.list.map(l => (      //array to array of JSX
-                    <List key={l.id} 
-                     title={l.title}
-                     description={l.description}/>
-                ))
-            }
-{/*                 
-                //    props.userData && props.userData.map(list => (      //array to array of JSX
-                //         <List key={list.id} 
-                //          title={list.title}
-                //          description={list.description}
-                //          />))
-                // {orders}
-                // {list} */}
-                {/* {list} */}
+         return(
+            <div>
+                {posts}
             </div>
-        );
-    
+        )
+    }
+      
 }
 
 const mapStateToProps =state=>{

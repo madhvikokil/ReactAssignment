@@ -5,13 +5,13 @@ const initialState ={
     
 }
 
-const purchaseBurgerSuccess = (state,action) => {
-    const newOrder = updateObject(action.orderData,{id:action.orderId}) 
-    return updateObject(state,{
+// const purchaseBurgerSuccess = (state,action) => {
+//     const newOrder = updateObject(action.orderData,{id:action.orderId}) 
+//     return updateObject(state,{
        
-        orders: state.orders.concat(newOrder)
-    })
-}
+//         orders: state.orders.concat(newOrder)
+//     })
+// }
 
 const fetchOrderSuccess = (state,action) => {
     return updateObject(state ,

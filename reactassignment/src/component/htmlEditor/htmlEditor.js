@@ -1,21 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { submit } from '../../store/actions/auth/auth';
-// Require Editor JS files.
 import 'froala-editor/js/froala_editor.pkgd.min.js';
-import Axios from '../../axios-orders';
-// Require Editor CSS files.
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
-
-// Require Font Awesome.
-// import 'font-awesome/css/font-awesome.css';
-
 import FroalaEditor from 'react-froala-wysiwyg';
+import Axios from 'axios';
 
+let a="vaishnavi"
 const config={
-    placeholderText: 'Edit Here!',
+    //placeholderText: 'Edit Here!',
     charCounterCount: false,
+    model:{a},
     events : {
         'froalaEditor.focus' : function(e, editor) {
           console.log(editor.selection.get());
@@ -25,8 +21,18 @@ const config={
 
 class HtmlEditor extends React.Component {
 
+    // componentDidMount() {
+    //     const{match: {params}} = this.props;
+    //     console.log("component Did Mount ");
+    //     Axios.get(`/addPost/${params.id}`)
+    //     .then(response => {
+    //         console.log(response);
+    //     }).catch(error => {
+    //         console.log(error);
+    //     })
+    // }
     state ={
-        title : '',
+        title : 'kdirgo',
         description: '',
         createdDate:'',
         updatedDate:''
@@ -67,6 +73,7 @@ render(){
         <FroalaEditor
             tag='textarea'
             config={config}
+       
             onModelChange={this.updateDescription}
         />
         

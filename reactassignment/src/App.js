@@ -22,7 +22,6 @@ render(){
         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
         <Route path = "/signup" component={() => <AuthSignup/>} />
         <Route path = "/login" component={() => <Auth/>}/>
-        {/* <Route path = "/dashboard" component={() => <Dashboard />}/> */}
         <Route exact path = "/" render={(() =><h1> Home</h1> )} />
     </Switch>
     
@@ -38,24 +37,16 @@ render(){
         <Route path = "/signup" component={() => <AuthSignup/>} />
         <Route path = "/AddPost" component={() => <AddPost/>} />
         <Route path = "/login" component={() => <Auth/>}/>
-        <Route path = "/logout" component={() => <Logout/>} />
+        <Route path = "/logout" component={() => <Logout/>}/>
+    {/* <Route path = "/post" component={() => <PostContainer/>}/> */}
         
                
         </Switch>
 
-// {/* <Route exact path="/" component={BurgerBuilder} />
-// <Route  path="/checkout" component={Checkout} />
-// <Route  path="/orders" component={Orders} />
-// <Route  path="/auth" component={Auth} />
-
-// <Route  path="/logout" component={Logout} />
-// <Redirect to ="/" /> */}
      )
 }
 
-   
-  
-  return(
+return(
     <BrowserRouter> 
       <div className="App">
       <HeaderElement />
