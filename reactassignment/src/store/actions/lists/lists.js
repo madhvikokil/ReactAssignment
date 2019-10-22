@@ -13,7 +13,7 @@ export const fetchOrders = (token,userId) => {
         console.log("fetchOrders...");
         console.log(token);
         console.log(userId);
-        // dispatch(fetchOrdersStart())
+       
         const queryParams = '?auth=' + token +'&orderBy="userId"&equalTo="' +userId + '"';
         Axios.get('./newPosts.json?' + queryParams)
             .then(response =>{
@@ -27,10 +27,9 @@ export const fetchOrders = (token,userId) => {
                    });
                }
                dispatch(fetchOrdersSuccess(fetchedOrders));
-                 //this.setState({orders:fetchedOrders})
+            
             })
             .catch(error => {
-                // dispatch(fetchOrdersFail(error))
                 console.log(error);
 ;            });
     }

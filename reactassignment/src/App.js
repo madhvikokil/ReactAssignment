@@ -8,7 +8,7 @@ import * as actions from './store/actions/auth/auth';
 import Auth from './container/Auth/Auth';
 import AuthSignup from './container/AuthSignup/AuthSignup';
 import Dashboard from './component/dashboard/dashboard';
-import AddPost from './component/addPost/addPost';
+import Modal from './component/Modal/Modal';
 
 class App extends React.Component{
   componentDidMount() {
@@ -32,16 +32,14 @@ render(){
       <Switch>
          <Route exact path = "/" render={(() =><h1> Home</h1> )} />
          <Route path = "/aboutus" render={(() =><h1> About Us</h1> )}/>
-        <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
-        <Route path = "/dashboard" component={() => <Dashboard />}/>
-        <Route path = "/signup" component={() => <AuthSignup/>} />
-        <Route path = "/AddPost" component={() => <AddPost/>} />
-        <Route path = "/login" component={() => <Auth/>}/>
-        <Route path = "/logout" component={() => <Logout/>}/>
+         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
+         <Route path = "/dashboard" component={Dashboard}/>
+         <Route path = "/dashboard/preview" component={Modal} />
+         <Route path = "/logout" component={Logout}/>
     {/* <Route path = "/post" component={() => <PostContainer/>}/> */}
         
                
-        </Switch>
+      </Switch>
 
      )
 }

@@ -5,11 +5,13 @@ import 'froala-editor/js/froala_editor.pkgd.min.js';
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
 import FroalaEditor from 'react-froala-wysiwyg';
-import Axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import Axios from '../../axios-orders';
+import moment from 'moment';
 
 let a="vaishnavi"
 const config={
-    //placeholderText: 'Edit Here!',
+
     charCounterCount: false,
     model:{a},
     events : {
@@ -20,19 +22,25 @@ const config={
 }
 
 class HtmlEditor extends React.Component {
-
-    // componentDidMount() {
-    //     const{match: {params}} = this.props;
-    //     console.log("component Did Mount ");
-    //     Axios.get(`/addPost/${params.id}`)
-    //     .then(response => {
-    //         console.log(response);
-    //     }).catch(error => {
-    //         console.log(error);
-    //     })
-    // }
+    
+ componentDidMount() {
+      
+        if(this.props.match.params.id !== 'newPost'){
+            console.log(this.props.match.params.id);
+            Axios.get(`newPosts/${this.props.match.params.id}.json`)
+            .then(response => {
+                this.setState({title:response.data.title,description:response.data.description})
+             
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
+      
+       
+    }
     state ={
-        title : 'kdirgo',
+        title :'',
         description: '',
         createdDate:'',
         updatedDate:''
@@ -57,28 +65,62 @@ class HtmlEditor extends React.Component {
             title : this.state.title,
             description: this.state.description,
             userId:this.props.userId,
-            createdDate:new Date(),
-            updatedDate:new Date()
+            createdDate:moment().format('lll'),
+            updatedDate:moment().format('lll')
         }
-        //Axios.post('/data/text.json',info);
          this.props.dataHandler(info,this.props.token)
     }
 
+    saveEditChanges =() => {
+
+    const editData = {
+        title:this.state.title,
+        description:this.state.description,
+        updatedDate:moment().format('lll')
+    }
+
+    Axios.patch(`newPosts/${this.props.match.params.id}.json`,editData)
+    .then(response => {
+       console.log(response)
+       alert("Successfully edited...");
+    
+    })
+    .catch(error => {
+        console.log(error)
+    })
+        
+    }
+
 render(){
+    let edit;
+    if(this.props.match.params.id !== 'newPost'){
+         edit = <button onClick={this.saveEditChanges}> Edit Save </button>
+    }
+    else{
+        edit = <button onClick={this.addPost}> Save </button>
+    }
+
     return(
+        
         <div>
             <h5> Enter Title </h5>
-            <input type="text" placeholder="title" onChange={this.updateInput}/>        
+            <input type="text" placeholder="title" onChange={this.updateInput} value={this.state.title}/>        
         <h5>Enter Description</h5>
         <FroalaEditor
             tag='textarea'
+            model={this.state.description}
             config={config}
-       
             onModelChange={this.updateDescription}
         />
         
+        {/* <FroalaEditorView
+        model={this.state.description}
+/> */}
             <br/><br/>
-            <button onClick={this.addPost}> Add </button>
+            
+            {/* <button onClick={this.addPost}> Save </button> */}
+            {edit}
+            {/* <button onClick={this.saveEditChanges}> Edit Save </button> */}
         </div>
     )
 }
@@ -100,6 +142,6 @@ const mapDispatchToProps = (dispatch) => {
 
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(HtmlEditor);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(HtmlEditor));
 
 

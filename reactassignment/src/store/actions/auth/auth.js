@@ -56,12 +56,6 @@ export const logout =() => {
     }
 }
 
-// export const fetchOrders = (token,userId) => {
-//     console.log("In fetchOrders");
-//     console.log("token: "+token);
-//     console.log("userId: "+userId);
-// }
-
 export const submit =(info,token) => {
     return dispatch =>{
         
@@ -90,7 +84,6 @@ export const auth = (email,password,isSignup)=>{
         console.log("Auth.js");
         
         let url;
-        //let url ='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDE5LJUm9G9hWGmHSyYUM0cvq_Fk_agaAE'
         if(isSignup){
            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA'
         }
@@ -98,14 +91,6 @@ export const auth = (email,password,isSignup)=>{
             .then(response => {
                 console.log(response);
                 console.log("Successfully Logged...");  
-                // .then(function (response) {
-                //     console.log(response);
-                //     console.log("success...");
-                //     if(response.status == 200){
-                //     //  <Link to="/dashboard"/> 
-                //     // history.push("/add");
-                //     console.log("Success");
-                //     }     
                
                 const expirationDate = new Date(new Date() .getTime()+ response.data.expiresIn * 1000);
                 localStorage.setItem('token',response.data.idToken);

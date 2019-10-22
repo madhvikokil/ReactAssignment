@@ -10,8 +10,9 @@ class HeaderElement extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
+ 
     const { activeItem } = this.state
-
+   
     return (
       <Segment inverted>
         <Menu inverted pointing secondary>

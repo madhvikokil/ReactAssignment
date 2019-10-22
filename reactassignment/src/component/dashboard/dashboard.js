@@ -2,11 +2,11 @@ import React ,{ Component } from 'react';
 import { Route ,Link} from 'react-router-dom';
 import Axios from '../../axios-orders';
 import './dashboard.css';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'; 
-import AddPost from '../addPost/addPost';
-import List from '../list/list';
 import Lists from '../../container/lists/lists';
-
+import addPost from '../addPost/addPost';
+import Modal from '../Modal/Modal';
 
 class Dashboard extends React.Component{
 
@@ -15,21 +15,29 @@ class Dashboard extends React.Component{
         console.log("fteched data");
     }
 
+     clickHandler=()=> {
+        this.props.history.push('/dashboard/posts');
+    }
+    
     render(){
-        
+        let showButton;
         const userid=localStorage.getItem('userId');
         const token= localStorage.getItem('token');
         console.log("userId: ",userid);
         console.log("token: ",token);
 
+        if('/dashboard'){
+            showButton = <button onClick={this.clickHandler}> See Posts </button>
+        }
+
         return(
            <div className="example">
                 <h1> Dashboard</h1>
-                <Route path="/addPost" exact />
-                    <Link to="/addPost">
-                    <button >+ ADD </button></Link><br/><br/>
-               <Lists />
-               
+
+                    <Route path="/dashboard/posts" exact component={Lists} />
+                    {showButton}
+                    <Route path="/dashboard/preview/:id" component={Modal}/>
+                    <Route path="/dashboard/posts/:id" component={addPost}/>
             </div> 
         )
     }
@@ -50,4 +58,4 @@ const mapDispatchToProps = dispatch => {
         //onFetchOrders: (token,userId) => dispatch(actions.fetchOrders(token,userId))
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Dashboard));

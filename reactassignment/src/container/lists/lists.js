@@ -1,26 +1,44 @@
 import React,{ useEffect } from 'react';
 import List from '../../component/list/list';
-import Axios from '../../axios-orders';
 import {connect}from 'react-redux';
-//import withErrorHandler from '../../hoc/withErrorHandler';
 import {fetchOrders} from '../../store/actions/lists/lists';
-//import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import PaginationExample from '../../component/Pagination/Pagination';
 class Lists extends React.Component{
+
+    state ={
+         currentPage : 1,
+         postsPerPage : 4
+    }
     componentDidMount () {
         this.props.onFetchOrders(this.props.token,this.props.userId);
+    }
+
+    addPostHandler = () => {
+        this.props.history.push('/dashboard/posts/newPost');
     }
    
     render(){
       
+        // const indexOfLastPage = this.state.currentPage * this.state.postsPerPage;
+        // const indexOfFirstPage = indexOfLastPage - this.state.postsPerPage;
+        // const currentPosts = posts.slice(indexOfFirstPage,indexOfLastPage);
+
         let posts = this.props.list.map(l => (      //array to array of JSX
                     <List 
                      id={l.id} 
                      title={l.title}
-                     description={l.description}/>
+                     description={l.description}
+                    createdDate= {l.createdDate}
+                    updatedDate={l.updatedDate}/>
+                    // page={currentPosts}
+                    
                 ))
          return(
             <div>
-                {posts}
+                 <button onClick={this.addPostHandler}>+ Add </button><br/><br/>
+                {posts}<br/>
+                <PaginationExample/>
+                <br/>
             </div>
         )
     }
@@ -42,5 +60,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Lists);
-//export default Orders;
 
