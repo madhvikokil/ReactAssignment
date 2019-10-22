@@ -23,7 +23,11 @@ class Lists extends React.Component{
         // const indexOfFirstPage = indexOfLastPage - this.state.postsPerPage;
         // const currentPosts = posts.slice(indexOfFirstPage,indexOfLastPage);
 
-        let posts = this.props.list.map(l => (      //array to array of JSX
+            console.log("length");
+            let posts;
+            console.log(this.props.list.length);
+            if(this.props.list.length != 0){
+                 posts = this.props.list.map(l => (      //array to array of JSX
                     <List 
                      id={l.id} 
                      title={l.title}
@@ -33,11 +37,15 @@ class Lists extends React.Component{
                     // page={currentPosts}
                     
                 ))
+            }else{
+                posts = <h1> No Data Found </h1>
+            }
+        
          return(
             <div>
                  <button onClick={this.addPostHandler}>+ Add </button><br/><br/>
                 {posts}<br/>
-                <PaginationExample/>
+                {/* <PaginationExample/> */}
                 <br/>
             </div>
         )
