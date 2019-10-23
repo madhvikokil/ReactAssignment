@@ -1,7 +1,7 @@
 import React from 'react';
 import Axios from '../../axios-orders';
 import { withRouter } from 'react-router-dom';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 
 class Modal extends React.Component {

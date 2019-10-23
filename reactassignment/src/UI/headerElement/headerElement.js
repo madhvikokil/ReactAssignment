@@ -10,6 +10,17 @@ class HeaderElement extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
+    let show;
+    if(this.props.isAuthenticate){
+      show = <Menu.Item position="right"><Button class="ui button" as={Link} to ='/logout'>Log out</Button></Menu.Item> 
+    }
+    else{
+      show = <Menu.Item position="right">
+              <Button class="ui button" as={Link} to ='/signup'>Sign Up</Button>
+              <Button class="ui button" as={Link} to ='/login'>Log In</Button>
+      </Menu.Item>
+      
+    }
  
     const { activeItem } = this.state
    
@@ -36,9 +47,10 @@ class HeaderElement extends Component {
           />
 {/* 
          if(this.props.isAuthenticate) ?  */}
-         <Button class="ui button" as={Link} to ='/signup'>Sign Up</Button>
-         <Button class="ui button" as={Link} to ='/login'>Log In</Button>
-         <Button class="ui button" as={Link} to ='/logout'>Log out</Button> 
+         {show}
+         {/* <Button class="ui button" as={Link} to ='/signup'>Sign Up</Button>
+         <Button class="ui button" as={Link} to ='/login'>Log In</Button> */}
+         {/* <Button class="ui button" as={Link} to ='/logout'>Log out</Button>  */}
         </Menu>
       </Segment>
 

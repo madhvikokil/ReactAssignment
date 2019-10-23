@@ -20,8 +20,8 @@ render(){
      <Switch>
         <Route path = "/aboutus" render={(() =><h1> About Us</h1> )}/>
         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
-        <Route path = "/signup" component={() => <AuthSignup/>} />
-        <Route path = "/login" component={() => <Auth/>}/>
+        <Route path = "/signup" component={AuthSignup} />
+        <Route path = "/login" component={Auth}/>
         <Route exact path = "/" render={(() =><h1> Home</h1> )} />
     </Switch>
     
@@ -54,7 +54,6 @@ return(
   )
 }
 }
-
 
 
 const mapStateToProps = state => {

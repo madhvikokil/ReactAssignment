@@ -9,7 +9,8 @@ export const fetchOrdersSuccess = (orders) => {
 }
 
 export const fetchOrders = (token,userId) => {
-    return dispatch => {
+    return dispatch => new Promise((resolve, reject) => {
+    // return dispatch => {
         console.log("fetchOrders...");
         console.log(token);
         console.log(userId);
@@ -19,7 +20,8 @@ export const fetchOrders = (token,userId) => {
             .then(response =>{
                 console.log("fetched order data");
                 console.log(response);
-               const fetchedOrders=[];
+              
+                const fetchedOrders=[];
                for(let key in response.data) {
                    fetchedOrders.push({
                        ...response.data[key],
@@ -27,10 +29,11 @@ export const fetchOrders = (token,userId) => {
                    });
                }
                dispatch(fetchOrdersSuccess(fetchedOrders));
-            
+               resolve(fetchOrders);
             })
             .catch(error => {
                 console.log(error);
+                reject(error);
 ;            });
-    }
+    });
 }

@@ -128,32 +128,33 @@ signUp = (event) =>{
             lname:formData.lname
         }
         console.log("userData",userData);
+        console.log("formData :",formData);
         Axios.put('/userData/'+response.localId+'.json',formData);
         alert("Signed up Successfully");
       
     }).catch(error=>{
-        // alert("error in signup plz check");
+         alert("error in signup plz check");
     })
 }
 
 // For Authentication the data is stored in Firebase
-authTransfer = (email,password)  => {
-    console.log("Store in Authentcation ");
-    console.log("email:"+email," password: "+password);
-        const authData= {
-            email : email,
-            password : password,
-            returnSecureToken : true
-        }
-        Axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA',authData)
-        .then(response => {
-            console.log(response.data);
-            console.log("authenticate new ");
-        }) .catch(error => {
-            console.log(error)
-            console.log("failed");
-        })
-    }
+// authTransfer = (email,password)  => {
+//     console.log("Store in Authentcation ");
+//     console.log("email:"+email," password: "+password);
+//         const authData= {
+//             email : email,
+//             password : password,
+//             returnSecureToken : true
+//         }
+//         Axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA',authData)
+//         .then(response => {
+//             console.log(response.data);
+//             console.log("authenticate new ");
+//         }) .catch(error => {
+//             console.log(error)
+//             console.log("failed");
+//         })
+//     }
 
 // If the input is changed
 inputChangedHandler = (event ,inputIdentifier) => {

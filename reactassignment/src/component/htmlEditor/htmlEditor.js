@@ -104,7 +104,13 @@ render(){
         
         <div>
             <h5> Enter Title </h5>
-            <input type="text" placeholder="title" onChange={this.updateInput} value={this.state.title}/>        
+            <input type="text"
+                 placeholder="Enter Title" 
+                 onChange={this.updateInput} 
+                 value={this.state.title}
+                 width="100"
+            />        
+
         <h5>Enter Description</h5>
         <FroalaEditor
             tag='textarea'
