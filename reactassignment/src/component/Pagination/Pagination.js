@@ -6,6 +6,7 @@ const PaginationExample = () => (
     boundaryRange={0}
     defaultActivePage={1}
     totalPages={5}
+    siblingRange={null}
   />
 
 

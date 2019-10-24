@@ -4,6 +4,7 @@ import * as actionTypes from '../actionTypes';
 import { Route } from 'react-router-dom';
 import { Redirect,Link } from 'react-router-dom';
 
+
 // const firebaseConfig = {
 //     apiKey: "AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA",
 //     authDomain: "assignment-cms.firebaseapp.com",
@@ -57,47 +58,58 @@ export const logout =() => {
 }
 
 export const submit =(info,token) => {
-    return dispatch =>{
+        return dispatch => new Promise((resolve, reject) => {
         
         //dispatch(authSuccess(response.data.idToken,response.data.localId));
       Axios.post('/newPosts.json?auth=' + token,info)
         .then (response => {
             alert("Data Added Successfully");
+            resolve();
+            // this.props.history.push('/dashboard/posts');
+            console.log("hei");
             console.log(response.data);
          })
            
         .catch ( error => {
        console.log(error);
     });
-    }
+    });
 }
 
 
-export const auth = (email,password,isSignup)=>{
-    return dispatch => {
-       
+export const auth = (name,email,password,isSignup)=>{
+        return dispatch => new Promise((resolve, reject) => {
+       console.log("my data");
         const authData = {
+            name:name,
             email:email,
+            userType:'USER',
             password:password,
             returnSecureToken : true
         };
+        console.log(authData);
         console.log("Auth.js");
-        
+        console.log("signup:",isSignup);
         let url;
-        if(isSignup){
-           url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA'
+        if(!isSignup){
+           url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA'
         }
         Axios.post(url,authData)
             .then(response => {
+                console.log(response.data.localId)
+                Axios.put('/userData/'+response.data.localId+'.json',authData);
+                // Axios.post(`/newPosts`)
                 console.log(response);
+                console.log(authData);
                 console.log("Successfully Logged...");  
+                resolve();
+                
+                // const expirationDate = new Date(new Date() .getTime()+ response.data.expiresIn * 1000);
+                // localStorage.setItem('token',response.data.idToken);
+                // localStorage.setItem('expirationDate',expirationDate);
+                // localStorage.setItem('userId',response.data.localId);
                
-                const expirationDate = new Date(new Date() .getTime()+ response.data.expiresIn * 1000);
-                localStorage.setItem('token',response.data.idToken);
-                localStorage.setItem('expirationDate',expirationDate);
-                localStorage.setItem('userId',response.data.localId);
-               
-                dispatch(authSuccess(response.data.idToken,response.data.localId));
+                // dispatch(authSuccess(response.data.idToken,response.data.localId));
                 
                 //dispatch(checkOutTimeout(response.data.expiresIn));
 
@@ -111,8 +123,61 @@ export const auth = (email,password,isSignup)=>{
                
                
             })
-    }
+    });
 }
+
+export const authLogin = (email,password,isSignUp)=>{
+    return dispatch => new Promise((resolve, reject) => {
+   console.log("my data");
+    const authData = {
+        isSignup:isSignUp,
+        email:email,
+        password:password,
+        returnSecureToken : true
+    };
+    console.log(authData);
+    console.log("Auth.js");
+    console.log("email :",email);
+     console.log("signup:",isSignUp);
+    let url;
+    if(isSignUp){
+       url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA'
+    }
+       
+    Axios.post(url,authData)
+        .then(response => {
+            console.log("admin user login");
+            console.log(response)
+            console.log("Successfully Logged..."); 
+            Axios.put(url,authData); 
+             resolve();
+            
+            const expirationDate = new Date(new Date() .getTime()+ response.data.expiresIn * 1000);
+            localStorage.setItem('token',response.data.idToken);
+            localStorage.setItem('expirationDate',expirationDate);
+            localStorage.setItem('userId',response.data.localId);
+            localStorage.setItem('email',response.data.email);
+            dispatch(authSuccess(response.data.idToken,response.data.localId));
+         })
+          
+            
+//             //dispatch(checkOutTimeout(response.data.expiresIn));
+
+//         })
+        .catch(err=> {
+            console.log(err);
+            alert("Invalid User");
+            // <Redirect to ="/login"/>
+            console.log("Invalid User");
+            console.log("error response")
+           
+           
+//         })
+// });
+})
+ })
+}
+
 
 
 export const authCheckState =()=> {

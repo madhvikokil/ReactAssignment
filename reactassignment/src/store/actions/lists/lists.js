@@ -29,7 +29,7 @@ export const fetchOrders = (token,userId) => {
                    });
                }
                dispatch(fetchOrdersSuccess(fetchedOrders));
-               resolve(fetchOrders);
+               resolve(fetchedOrders);
             })
             .catch(error => {
                 console.log(error);

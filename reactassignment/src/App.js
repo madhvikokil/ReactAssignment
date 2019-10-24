@@ -9,7 +9,7 @@ import Auth from './container/Auth/Auth';
 import AuthSignup from './container/AuthSignup/AuthSignup';
 import Dashboard from './component/dashboard/dashboard';
 import Modal from './component/Modal/Modal';
-
+import NotFound from './hoc/notFound/notFound';
 class App extends React.Component{
   componentDidMount() {
     this.props.onTryAutoSignup();
@@ -21,8 +21,9 @@ render(){
         <Route path = "/aboutus" render={(() =><h1> About Us</h1> )}/>
         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
         <Route path = "/signup" component={AuthSignup} />
-        <Route path = "/login" component={Auth}/>
+        <Route path = "/login" exact component={Auth}/>
         <Route exact path = "/" render={(() =><h1> Home</h1> )} />
+        <Route component={NotFound} />
     </Switch>
     
   );
@@ -30,12 +31,14 @@ render(){
   if(this.props.isAuthenticate){
     routes =(
       <Switch>
-         <Route exact path = "/" render={(() =><h1> Home</h1> )} />
-         <Route path = "/aboutus" render={(() =><h1> About Us</h1> )}/>
-         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
+         
+         <Route path = "/aboutus" exact render={(() =><h1> About Us</h1> )}/>
+         <Route path = "/contactus" exact render={(() =><h1> Contact Us</h1> )}/>
          <Route path = "/dashboard" component={Dashboard}/>
          <Route path = "/dashboard/preview" component={Modal} />
          <Route path = "/logout" component={Logout}/>
+         <Route exact path = "/" render={(() =><h1> Home</h1> )} />
+         <Route component={NotFound} />
     {/* <Route path = "/post" component={() => <PostContainer/>}/> */}
         
                

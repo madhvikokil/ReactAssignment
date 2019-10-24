@@ -43,7 +43,8 @@ class HtmlEditor extends React.Component {
         title :'',
         description: '',
         createdDate:'',
-        updatedDate:''
+        updatedDate:'',
+        type:'draft'
     }
 
     updateInput =(event) => {
@@ -65,10 +66,14 @@ class HtmlEditor extends React.Component {
             title : this.state.title,
             description: this.state.description,
             userId:this.props.userId,
+            type:this.state.type,
             createdDate:moment().format('lll'),
             updatedDate:moment().format('lll')
         }
          this.props.dataHandler(info,this.props.token)
+         .then(() => {
+             this.props.history.push('/dashboard/posts')
+         })
     }
 
     saveEditChanges =() => {
@@ -76,6 +81,7 @@ class HtmlEditor extends React.Component {
     const editData = {
         title:this.state.title,
         description:this.state.description,
+        type:this.state.type,
         updatedDate:moment().format('lll')
     }
 
@@ -83,6 +89,7 @@ class HtmlEditor extends React.Component {
     .then(response => {
        console.log(response)
        alert("Successfully edited...");
+       this.props.history.push('/dashboard/posts');
     
     })
     .catch(error => {
@@ -91,10 +98,16 @@ class HtmlEditor extends React.Component {
         
     }
 
+    changeToPublished= () =>{
+        this.setState({type:'published'})
+    }
+
 render(){
     let edit;
     if(this.props.match.params.id !== 'newPost'){
-         edit = <button onClick={this.saveEditChanges}> Edit Save </button>
+
+        edit = (<><button onClick={this.saveEditChanges}> Edit Save </button>
+         <button onClick={this.changeToPublished}> published </button></>)
     }
     else{
         edit = <button onClick={this.addPost}> Save </button>
@@ -118,15 +131,8 @@ render(){
             config={config}
             onModelChange={this.updateDescription}
         />
-        
-        {/* <FroalaEditorView
-        model={this.state.description}
-/> */}
             <br/><br/>
-            
-            {/* <button onClick={this.addPost}> Save </button> */}
             {edit}
-            {/* <button onClick={this.saveEditChanges}> Edit Save </button> */}
         </div>
     )
 }
