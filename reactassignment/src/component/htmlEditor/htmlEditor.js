@@ -102,15 +102,39 @@ class HtmlEditor extends React.Component {
         this.setState({type:'published'})
     }
 
+    changeTheType =(event) =>{
+        
+        this.setState({
+            type:event
+        })
+    }
+
 render(){
     let edit;
-    if(this.props.match.params.id !== 'newPost'){
+    if(this.props.match.params.id !== 'newPost' && (localStorage.getItem('email') == 'admin@gmail.com')){
 
         edit = (<><button onClick={this.saveEditChanges}> Edit Save </button>
-         <button onClick={this.changeToPublished}> published </button></>)
+
+            <select value={this.state.type} onChange={this.changeTheType}>
+                <option value="published">Published</option>
+                <option value="draft'">Draft</option>
+            </select></>)
     }
     else{
-        edit = <button onClick={this.addPost}> Save </button>
+        if(this.props.match.params.id == 'newPost' && (localStorage.getItem('email') == 'admin@gmail.com')){
+        edit = (<><button onClick={this.addPost}> Save </button>
+
+            <select value={this.state.type} onChange={this.changeTheType}>
+                <option value="published">Published</option>
+                <option value="draft'">Draft</option>
+            </select></>)
+        }
+        edit = (<><button onClick={this.addPost}> Save </button>
+
+        <select value={this.state.type} onChange={this.changeTheType}>
+                <option value="published">Published</option>
+                <option value="draft'">Draft</option>
+            </select></>)
     }
 
     return(

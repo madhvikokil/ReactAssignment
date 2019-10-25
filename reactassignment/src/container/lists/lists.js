@@ -10,7 +10,7 @@ class Lists extends React.Component{
     state ={
         posts:[],
         currentPage : 1,
-        postsPerPage : 3,
+        postsPerPage : 10,
         fullData:[]
          
          
@@ -88,15 +88,41 @@ deleteHandler = (id) => {
                 console.log("Pagination delete");
             this.props.onFetchOrders(this.props.token,this.props.userId)
             .then(response =>{
+                Axios.get('/newPosts.json')
+                .then(response => {
+                  
+                    console.log(response);
+                    console.log("userId data...");
+                    
+                     const fetchedOrders=[];
+                     for(let key in response.data) {
+                         fetchedOrders.push({
+                             ...response.data[key],
+                             id:key
+                         });
+                     }
+                console.log("fetched after delete",fetchedOrders);
                 console.log("new response");
-                this.setState({fullData: response,posts: response.slice(0, this.state.postsPerPage)});
-                this.setState({totalPages: Math.ceil(response.length/this.state.postsPerPage)});
+                console.log("token :",this.props.token);
+                console.log("userId :",this.props.userId);
+                this.setState({fullData: fetchedOrders,posts:fetchedOrders.slice(0, this.state.postsPerPage)});
+                this.setState({totalPages: Math.ceil(this.state.fullData.length/this.state.postsPerPage)});
+                // this.setState({fullData: response,posts: response.slice(0, this.state.postsPerPage)});
+                // this.setState({totalPages: Math.ceil(response.length/this.state.postsPerPage)});
             })
 
         })
-    }
+    })
+}
     render(){
-      
+      let isAdmin;
+
+      if(localStorage.getItem('email') == 'admin@gmail.com'){
+          isAdmin=true
+      }
+      else{
+          isAdmin=false
+      }
         console.log("length");
             let posts;
             console.log(this.props.list.length);
@@ -106,7 +132,7 @@ deleteHandler = (id) => {
                <table border="1" width="80%">
                    <tr>
                        <th>Title</th>
-                
+                        <th>Type</th>
                        <th>Created Date</th>
                        <th>Updated Date</th>
                    </tr>
@@ -122,12 +148,17 @@ deleteHandler = (id) => {
                     //  page={this.state.currentPosts}/>
                     <tr>  
                         <td>{l.title}</td>
-                        
+                        <td>{l.type}</td>
                         <td>{l.createdDate}</td>
                         <td>{l.updatedDate} </td>
-                         <Button onClick={(id) =>this.deleteHandler(l.id)}>Delete</Button> 
+                        {isAdmin && (
+                            <Button onClick={(id) =>this.deleteHandler(l.id)}>Delete</Button> 
+
+                        )}
+                       
                          <Button onClick={(id) =>this.editHandler(l.id)}>Edit</Button> 
                          <Button onClick={(id) =>this.previewHandler(l.id)}>Preview</Button> 
+                         
 
                     </tr>
                 ))}
@@ -155,11 +186,7 @@ deleteHandler = (id) => {
                     firstItem={null}
                     ellipsisItem={null}
                 />
-                {/* <PaginationExample
-                onPageChange={this.pageChange}
-                currentpage ={this.state.currentPage} 
-                postsPerPage ={this.state.postsPerPage}
-                /> */}
+              
                 <br/>
             </div>
         )

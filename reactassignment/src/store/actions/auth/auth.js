@@ -83,10 +83,11 @@ export const auth = (name,email,password,isSignup)=>{
         const authData = {
             name:name,
             email:email,
-            userType:'USER',
             password:password,
+            userType:'USER',
             returnSecureToken : true
         };
+        console.log(password);
         console.log(authData);
         console.log("Auth.js");
         console.log("signup:",isSignup);
@@ -101,7 +102,7 @@ export const auth = (name,email,password,isSignup)=>{
                 // Axios.post(`/newPosts`)
                 console.log(response);
                 console.log(authData);
-                console.log("Successfully Logged...");  
+                console.log("Successfully Signed up...");  
                 resolve();
                 
                 // const expirationDate = new Date(new Date() .getTime()+ response.data.expiresIn * 1000);

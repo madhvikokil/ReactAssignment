@@ -136,7 +136,7 @@ changeHandler = (e) => {
 
   getValidationMessages = () => {
     let validationMessages = [];
-    if (this.state.errorMessage.name) {
+    if (this.state.errorMessage.email) {
       validationMessages.push(<Message key="1"
         size='mini'
         error

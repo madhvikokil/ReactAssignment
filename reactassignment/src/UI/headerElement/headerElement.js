@@ -26,7 +26,7 @@ class HeaderElement extends Component {
         <Menu inverted pointing secondary>
           {this.props.isAuthenticate && !isApp &&
           <Menu.Item
-          as={Link} to='/dashboard'
+          as={Link} to='/dashboard/posts'
           name='dashboard'
           active={activeItem === 'dashboard'}
           onClick={this.handleItemClick}

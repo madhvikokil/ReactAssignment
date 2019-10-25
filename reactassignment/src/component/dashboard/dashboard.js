@@ -20,7 +20,7 @@ class Dashboard extends React.Component{
     }
     
     render(){
-        let showButton;
+        
         const userid=localStorage.getItem('userId');
         const token= localStorage.getItem('token');
         console.log("userId: ",userid);
@@ -38,7 +38,6 @@ class Dashboard extends React.Component{
                     {/* {showButton} */}
                     <Route path="/dashboard/preview/:id" component={Modal}/>
                     <Route path="/dashboard/posts/:id" component={addPost}/>
-                    
                     
             </div> 
         )
