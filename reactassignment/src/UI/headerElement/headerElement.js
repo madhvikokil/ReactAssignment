@@ -8,13 +8,11 @@ import { withRouter }from 'react-router-dom';
 class HeaderElement extends Component {
   state = { activeItem: 'home' }
   
+  
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    // if(this.props.location.pathname == pathname){
-      
-    // }
 
     const isApp = this.props.location.pathname.includes('/dashboard');
     console.log(this.props);
@@ -53,8 +51,20 @@ class HeaderElement extends Component {
             active={activeItem === 'contactus'}
             onClick={this.handleItemClick}
           />
+             
         </>
           }
+          {this.props.isAuthenticate && localStorage.getItem('email') == 'admin@gmail.com' ?
+            <Menu.Item
+            as={Link} to='/app'
+            name='Charts'
+            active={activeItem === 'app'}
+            onClick={this.handleItemClick}
+          />
+
+          :null
+          }
+        
          {this.props.isAuthenticate ?
          (<Menu.Item position="right">
            
@@ -65,10 +75,11 @@ class HeaderElement extends Component {
          (<Menu.Item position="right">
          <Button class="ui button" as={Link} to ='/signup'>Sign Up</Button>
          <Button class="ui button" as={Link} to ='/login'>Log In</Button>
+      
        </Menu.Item>)
         }
-        
-        </Menu>
+
+         </Menu>
       </Segment>
 
 

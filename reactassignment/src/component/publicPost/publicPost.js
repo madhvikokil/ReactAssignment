@@ -1,54 +1,45 @@
-import React ,{Component} from 'react';
+import React ,{useState,useEffect} from 'react';
 import Axios from '../../axios-orders';
 import { withRouter } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
+import { Card, Icon, Image } from 'semantic-ui-react'
 
-class PublicPosts extends Component{
 
-    state={
-        title:'',
-        des:'',
-        cd:'',
-        ud:''
-    }
+const PublicPosts =(props)=> {
 
-    componentDidMount(){
-        console.log("get the Id");
-        console.log("here");
-        Axios.get('/newPosts');
-        console.log("id :",this.props.match.params.id);
-        Axios.get(`/newPosts/${this.props.match.params.id}.json`)
-        .then(response => {
-            console.log("public posts response");
-            console.log(response);
-            this.setState({ title:response.data.title,
-                            des:response.data.description,
-                            cd:response.data.createdDate,
-                            up:response.data.updatedDate
-            })
-        })
-    }
+    const [title,setTitle] = useState("")
+    const [description,setdescription] = useState("")
+    const [updatedDate,setUpdatedDate] = useState("")
+    const [createdDate,setCreatedDate] = useState("")
 
-    render(){
-        const html = this.state.des ;
-        return(
+     useEffect(()=>{
+
+        Axios.get(`/newPosts/${props.match.params.id}.json`)
+            .then(response => {
+
+                setTitle(response.data.title)
+                setdescription(response.data.description)
+                setUpdatedDate(response.data.updatedDate)
+                setCreatedDate(response.data.createdDate);
+           
+            })},[props.match.params.id])
+
         
-                <div><br/><hr/>
-               
-                    <p><b>Title :</b> {this.state.title}</p>
-                    <p><b>Description :</b>
-                    <div>{ReactHtmlParser(html) }
-                    </div></p>
-                    <p><b>Created Date :</b> {this.state.cd}</p>
-                    <p><b>Updated Date :</b> {this.state.ud}</p>
-                    
-                </div>
+            return(
             
-               
-          
-        );
-    }
-}
+                    <div><br/><hr/>
+                   
+                        <p><b>Title :</b> {title}</p>
+                        <p><b>Description :</b>
+                        <div>{ReactHtmlParser(description) }
+                        </div></p>
+                        <p><b>Created Date :</b> {createdDate}</p>
+                        <p><b>Updated Date :</b> {updatedDate}</p>
+                        
+                    </div>
+            )
+        }
+
 
 
 export default withRouter(PublicPosts);

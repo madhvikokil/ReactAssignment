@@ -1,9 +1,8 @@
 import React from 'react';
-import List from '../../component/list/list';
 import {connect}from 'react-redux';
 import {fetchOrders} from '../../store/actions/lists/lists';
 import ErrorBoundry from '../../hoc/ErrorBoundary/ErrorBoundary';
-import { Pagination, Button } from 'semantic-ui-react';
+import { Pagination, Button, Table,Menu} from 'semantic-ui-react';
 import Axios from '../../axios-orders'
 class Lists extends React.Component{
 
@@ -15,13 +14,12 @@ class Lists extends React.Component{
          
          
     }
-    componentDidMount () {
+    componentDidMount = async()=> {
    
         const email = localStorage.getItem('email');
         if( email == 'admin@gmail.com'){
-            Axios.get('/newPosts.json')
-            .then(response => {
-              
+            let response = await Axios.get('/newPosts.json')
+                       
                 console.log(response);
                 console.log("userId data...");
                 
@@ -38,7 +36,7 @@ class Lists extends React.Component{
                 console.log("new posts: ",this.state.posts);
                 this.setState({fullData: fetchedOrders,posts:fetchedOrders.slice(0, this.state.postsPerPage)});
             this.setState({totalPages: Math.ceil(this.state.fullData.length/this.state.postsPerPage)});
-            })
+           
 
         } else{
             this.props.onFetchOrders(this.props.token,this.props.userId)
@@ -81,10 +79,10 @@ editHandler = (id) => {
     this.props.history.push(`/dashboard/posts/${id}`)
     }
 
-deleteHandler = (id) => {
+deleteHandler = async(id) => {
         console.log("Delete...");
-        Axios.delete(`newPosts/${id}.json`)
-            .then(response => {
+   
+        await Axios.delete(`newPosts/${id}.json`)
                 console.log("Pagination delete");
             this.props.onFetchOrders(this.props.token,this.props.userId)
             .then(response =>{
@@ -112,7 +110,7 @@ deleteHandler = (id) => {
             })
 
         })
-    })
+    
 }
     render(){
       let isAdmin;
@@ -129,30 +127,32 @@ deleteHandler = (id) => {
             if(this.state.posts.length != 0 ){
 
         posts = 
-               <table border="1" width="80%">
-                   <tr>
-                       <th>Title</th>
-                        <th>Type</th>
-                       <th>Created Date</th>
-                       <th>Updated Date</th>
-                   </tr>
+               <Table border="1" width="80%">
+                   <Table.Header>
+                       <Table.Cell><b>Title</b></Table.Cell>
+                        <Table.Cell><b>Type</b></Table.Cell>
+                       <Table.Cell><b>Created Date</b></Table.Cell>
+                       <Table.Cell><b>Updated Date</b></Table.Cell>
+                       <Table.Cell><b>Actions</b></Table.Cell>
+                   </Table.Header>
                   
               
                 {this.state.posts.map(l => (      //array to array of JSX
-                    // <List 
-                    //  id={l.id} 
-                    //  title={l.title}
-                    //  description={l.description}
-                    //  createdDate= {l.createdDate}
-                    //  updatedDate={l.updatedDate}
-                    //  page={this.state.currentPosts}/>
-                    <tr>  
-                        <td>{l.title}</td>
-                        <td>{l.type}</td>
-                        <td>{l.createdDate}</td>
-                        <td>{l.updatedDate} </td>
+                    <Table.Row>  
+                        <Table.Cell>{l.title}</Table.Cell>
+                        <Table.Cell>{l.type}</Table.Cell>
+                        <Table.Cell>{l.createdDate}</Table.Cell>
+                        <Table.Cell>{l.updatedDate} </Table.Cell>
                         {isAdmin && (
-                            <Button onClick={(id) =>this.deleteHandler(l.id)}>Delete</Button> 
+                            <Button
+                            onClick={() =>
+                                window.confirm("Are you sure you wish to delete this item?") &&
+                                this.deleteHandler(l.id)
+                            }> Delete
+                        </Button>
+                            // <Button onClick={
+                                
+                            //     (id) =>this.deleteHandler(l.id)}>Delete</Button> 
 
                         )}
                        
@@ -160,16 +160,16 @@ deleteHandler = (id) => {
                          <Button onClick={(id) =>this.previewHandler(l.id)}>Preview</Button> 
                          
 
-                    </tr>
+                    </Table.Row>
                 ))}
-                </table> 
+                </Table> 
             }else{
                 posts = <h1> No Data Found </h1>
             }
         
          return(
-            <div>
-                 <button onClick={this.addPostHandler}>+ Add </button><br/><br/>
+            <div><Menu.Item position="right">
+                 <Button onClick={this.addPostHandler} position="right">+ Add </Button></Menu.Item><br/><br/> 
                 <ErrorBoundry>
                    
                 {posts}

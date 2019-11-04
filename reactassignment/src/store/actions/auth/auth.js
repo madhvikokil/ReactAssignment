@@ -92,7 +92,7 @@ export const auth = (name,email,password,isSignup)=>{
         console.log("Auth.js");
         console.log("signup:",isSignup);
         let url;
-        if(!isSignup){
+        if(isSignup){
            url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAQhsLsRX4QrkPtp7OQCA11_oTnxIZ8nZA'
         }
         Axios.post(url,authData)
@@ -117,7 +117,7 @@ export const auth = (name,email,password,isSignup)=>{
             })
             .catch(err=> {
                 console.log(err);
-                alert("Invalid User");
+                alert("Already Exists");
                 // <Redirect to ="/login"/>
                 console.log("Invalid User");
                 console.log("error response")

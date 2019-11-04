@@ -9,39 +9,6 @@ import Validator from "validatorjs";
 
 class Auth extends Component{
 
-    // state = { 
-    //     controls: {
-    //         email : {    
-    //             elementType :'input',
-    //             elementConfig:{
-    //                 type:'email',
-    //                 placeholder:'Email'
-    //             },
-    //             value:'',
-    //             validation:{
-    //                 required:true
-    //             },
-    //             vaild:false,
-    //             touched:false
-    //          },
-    //          password : {    
-    //             elementType :'input',
-    //             elementConfig:{
-    //                 type:'password',
-    //                 placeholder:'Password'
-    //             },
-    //             value:'',
-    //             validation:{
-    //                 required:true,
-    //                 minLength:7
-    //             },
-    //             vaild:false,
-    //             touched:false
-    //          }
-    //     },
-    //     isSignup:true
-    // }
-
     state ={
         form: {
             email:'',
@@ -59,7 +26,7 @@ class Auth extends Component{
         const rules = {
           email: 'required|email',
           password: 'required|min:6|max:15',
-          name: 'required|min:6|max:35'
+          name: 'required'
         };
     
         let validation = new Validator(this.state.form, rules);
@@ -78,7 +45,7 @@ class Auth extends Component{
         this.setState({ form });
         const rules = {
             email: 'required|email',
-            password: 'required|min:4|max:15',
+            password: 'required|min:6|max:15',
             name: 'required'
           };
       
@@ -118,68 +85,6 @@ class Auth extends Component{
     }) 
   
     }
-
-
-
-    // inputChangedHandler = (event ,inputIdentifier) => {
-    //     const updatedOrderForm = {
-    //         ...this.state.controls 
-    //     }
-    //    const updatedFormElement = {
-    //     ... updatedOrderForm[inputIdentifier]
-    //    } ;
-    //    updatedFormElement.value = event.target.value;
-    //    updatedFormElement.touched = true;
-    
-    //    updatedOrderForm[inputIdentifier] = updatedFormElement;
-       
-    //    let formIsVaild = true;
-    //    for(let inputIdentifier in updatedOrderForm){
-    //        formIsVaild=updatedOrderForm[inputIdentifier].valid && formIsVaild;
-    //    }
-    //    console.log(formIsVaild);
-    //    this.setState({controls:updatedOrderForm,formIsVaild:formIsVaild})
-    // }
-
-//     render(){
-//         const formElementArray =[];
-//         for(let key in this.state.controls){
-//             formElementArray.push({
-//                 id:key,
-//                 config:this.state.controls[key]
-//             })
-//         } 
-//         let form =(
-//             <form>
-//                {formElementArray.map(formElement => (
-//                     <Input 
-//                     placeholder={this.state.controls.email.placeholder}
-//                     key={formElement.id}
-//                      elementType={formElement.config.elementType}
-//                      elementConfig={formElement.config.elementConfig}
-//                     // value={formElement.config.value}
-//                     invalid = {!formElement.config.valid}
-//                     shouldValidate={formElement.config.validation}
-//                     touched={formElement.config.touched} 
-//                     changed={(event) => {this.inputChangedHandler(event,formElement.id)}}
-//                     />
-//                 ))}
-//             <br/>
-//             <Link to="/dashboard" >
-//                 <button class="ui button" type="button" onClick={this.submitHandler}>Login</button>
-//              </Link>
-            
-//                 </form>
-//         );
-//         return(
-
-//         <div> 
-//             <h1> Enter Details</h1><br/>
-//             {form}
-//         </div>
-//         )
-//     }
-// }
 
 render() {
    

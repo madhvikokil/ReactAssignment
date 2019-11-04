@@ -6,7 +6,7 @@ import ReactHtmlParser from 'react-html-parser';
 
 class Modal extends React.Component {
 
-    componentDidMount() {
+   componentDidMount() {
        
         console.log("id: ");
         console.log(this.props.match.params.id);

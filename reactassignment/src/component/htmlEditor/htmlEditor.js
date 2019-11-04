@@ -8,8 +8,11 @@ import FroalaEditor from 'react-froala-wysiwyg';
 import { withRouter } from 'react-router-dom';
 import Axios from '../../axios-orders';
 import moment from 'moment';
+import { Button} from 'semantic-ui-react';
 
-let a="vaishnavi"
+
+
+let a=""
 const config={
 
     charCounterCount: false,
@@ -23,7 +26,7 @@ const config={
 
 class HtmlEditor extends React.Component {
     
- componentDidMount() {
+ componentDidMount = async() => {
       
         if(this.props.match.params.id !== 'newPost'){
             console.log(this.props.match.params.id);
@@ -36,9 +39,8 @@ class HtmlEditor extends React.Component {
                 console.log(error)
             })
         }
-      
-       
-    }
+      }
+
     state ={
         title :'',
         description: '',
@@ -58,6 +60,7 @@ class HtmlEditor extends React.Component {
 
     addPost=(event) => {
         event.preventDefault();
+        this.setState({type:event.target.value})
         console.log("added Post...");
         console.log(this.state.title);
         console.log(this.state.description);
@@ -76,7 +79,7 @@ class HtmlEditor extends React.Component {
          })
     }
 
-    saveEditChanges =() => {
+     saveEditChanges =() => {
 
     const editData = {
         title:this.state.title,
@@ -98,14 +101,14 @@ class HtmlEditor extends React.Component {
         
     }
 
-    changeToPublished= () =>{
-        this.setState({type:'published'})
-    }
+    // changeToPublished= () =>{
+    //     this.setState({type:'published'})
+    // }
 
     changeTheType =(event) =>{
         
         this.setState({
-            type:event
+            type:event.target.value
         })
     }
 
@@ -113,29 +116,35 @@ render(){
     let edit;
     if(this.props.match.params.id !== 'newPost' && (localStorage.getItem('email') == 'admin@gmail.com')){
 
-        edit = (<><button onClick={this.saveEditChanges}> Edit Save </button>
+        edit = (<div><Button onClick={this.saveEditChanges}> Edit Save </Button>
 
-            <select value={this.state.type} onChange={this.changeTheType}>
+            <select  onChange={this.changeTheType}>
+                <option >Select </option>
                 <option value="published">Published</option>
-                <option value="draft'">Draft</option>
-            </select></>)
+                <option value="draft">Draft</option>
+            </select></div>)
     }
     else{
         if(this.props.match.params.id == 'newPost' && (localStorage.getItem('email') == 'admin@gmail.com')){
-        edit = (<><button onClick={this.addPost}> Save </button>
+        edit = (<div><Button onClick={this.addPost}> Save </Button>
 
-            <select value={this.state.type} onChange={this.changeTheType}>
+            <select onChange={this.changeTheType}>
+                <option >Select </option>
                 <option value="published">Published</option>
-                <option value="draft'">Draft</option>
-            </select></>)
+                <option value="draft">Draft</option>
+            </select></div>)
         }
-        edit = (<><button onClick={this.addPost}> Save </button>
-
-        <select value={this.state.type} onChange={this.changeTheType}>
-                <option value="published">Published</option>
-                <option value="draft'">Draft</option>
-            </select></>)
+    else {
+        if(this.props.match.params.id == 'newPost' && (localStorage.getItem('email') != 'admin@gmail.com')){
+            
+            edit = (<Button onClick={this.addPost}>Save</Button>)
+        }
+       if(this.props.match.params.id !== 'newPost' && (localStorage.getItem('email') != 'admin@gmail.com')){
+            edit =(<Button onClick={this.saveEditChanges}> Edit Save </Button>)
+        }
+        }
     }
+    
 
     return(
         
@@ -179,5 +188,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(HtmlEditor));
-
-
