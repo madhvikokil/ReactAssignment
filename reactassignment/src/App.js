@@ -12,6 +12,7 @@ import Modal from './component/Modal/Modal';
 import NotFound from './hoc/notFound/notFound';
 import Home from './container/home/home';
 import Charts from './component/Charts/Chart';
+import ChartsShown from './component/Charts/ChartsShown';
 
 class App extends React.Component{
   componentDidMount() {
@@ -24,7 +25,6 @@ render(){
         <Route path = "/aboutus" render={(() =><h1> About Us</h1> )}/>
         <Route path = "/contactus" render={(() =><h1> Contact Us</h1> )}/>
         <Route path = "/signup" component={AuthSignup} />
-        <Route path="/app" component={Charts} />
         <Route path = "/login" component={Auth}/>
         <Route  path = "/" component={Home} />
         {/* <Route path = "/publicPosts/:id" component={PreviewData} /> */}
@@ -41,10 +41,10 @@ render(){
          <Route path = "/contactus" exact render={(() =><h1> Contact Us</h1> )}/>
          <Route path = "/dashboard" component={Dashboard}/>
          <Route path = "/dashboard/preview" component={Modal} />
-         <Route path="/app" component={Charts} />
+         <Route path="/app/charts" component={ChartsShown} />
          {/* <Route path = "/publicPosts/:id" component={PreviewData} /> */}
          <Route path = "/logout" component={Logout}/>
-         <Route  path = "/" component={Home} />
+         <Route path = "/" component={Home} />
          <Route component={NotFound} />
         
     {/* <Route path = "/post" component={() => <PostContainer/>}/> */}

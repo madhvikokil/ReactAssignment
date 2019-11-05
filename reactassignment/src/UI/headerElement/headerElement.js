@@ -56,7 +56,7 @@ class HeaderElement extends Component {
           }
           {this.props.isAuthenticate && localStorage.getItem('email') == 'admin@gmail.com' ?
             <Menu.Item
-            as={Link} to='/app'
+            as={Link} to='/app/charts'
             name='Charts'
             active={activeItem === 'app'}
             onClick={this.handleItemClick}

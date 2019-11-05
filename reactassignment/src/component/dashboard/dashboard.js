@@ -32,7 +32,7 @@ class Dashboard extends React.Component{
 
         return(
            <div className="example">
-                <h1> Dashboard</h1>
+                {/* <h1> Dashboard</h1> */}
 
                     <Route path="/dashboard/posts" exact component={Lists} />
                     {/* {showButton} */}

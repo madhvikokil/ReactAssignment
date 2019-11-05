@@ -8,7 +8,7 @@ import FroalaEditor from 'react-froala-wysiwyg';
 import { withRouter } from 'react-router-dom';
 import Axios from '../../axios-orders';
 import moment from 'moment';
-import { Button} from 'semantic-ui-react';
+import { Button,Input} from 'semantic-ui-react';
 
 
 
@@ -70,8 +70,11 @@ class HtmlEditor extends React.Component {
             description: this.state.description,
             userId:this.props.userId,
             type:this.state.type,
-            createdDate:moment().format('lll'),
-            updatedDate:moment().format('lll')
+            createdDate : moment().format("YYYY-MM-DD"),
+            // createdDate:moment().format('lll'),
+            // updatedDate:moment().format('lll')
+            updatedDate : moment().format("YYYY-MM-DD"),
+            
         }
          this.props.dataHandler(info,this.props.token)
          .then(() => {
@@ -85,7 +88,7 @@ class HtmlEditor extends React.Component {
         title:this.state.title,
         description:this.state.description,
         type:this.state.type,
-        updatedDate:moment().format('lll')
+        updatedDate:moment().format("YYYY-MM-DD"),
     }
 
     Axios.patch(`newPosts/${this.props.match.params.id}.json`,editData)
@@ -100,10 +103,6 @@ class HtmlEditor extends React.Component {
     })
         
     }
-
-    // changeToPublished= () =>{
-    //     this.setState({type:'published'})
-    // }
 
     changeTheType =(event) =>{
         
@@ -150,7 +149,8 @@ render(){
         
         <div>
             <h5> Enter Title </h5>
-            <input type="text"
+            
+            <Input type="text"
                  placeholder="Enter Title" 
                  onChange={this.updateInput} 
                  value={this.state.title}

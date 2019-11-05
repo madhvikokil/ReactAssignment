@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Axios from '../../axios-orders';
 import {
-  PieChart, Pie, Sector, Cell,
+  PieChart, Pie, Cell,
 } from 'recharts';
 
 
@@ -48,46 +48,6 @@ export default class Example extends PureComponent {
       this.setState({published:lengthInpublish});
       this.setState({UnPublished:lengthIndraft})
 
-
-Axios.get('/userData.json')
-  .then(res => {
- 
-    console.log("res.data",res.data);
-    console.log("res :",res);
-    
-    Axios.get('/newPosts.json')
-    .then(response => {
-      console.log("nepost ka response: ",response);
-    })
-    const fetchedData = [];
-    for (let key in response.data) {
-        fetchedData.push({
-            ...response.data[key],
-            id: key
-})
-
-}
-console.log("-----------------------");
-console.log("fetched data :",fetchedData);
-
-    console.log(Object.keys(res.data));
-    // Axios.get('/newPosts.json')
-    // .then(reponse => {
-    //   console.log(response)
-    //     })
-
-
-
-console.log("fetchedData:",fetchedData);
-
-  })
-//   Axios.get('/newPosts.json')
-//   .then(response2 => {
-//     console.log("new response");
-//     console.log(response2);
-//     console.log(response2.data.title);
-//   })
-  
   }
 render() {
      const data = [
@@ -96,9 +56,6 @@ render() {
      
     ];
 
-    const data2 = [
-      {user:this.state.user,value:this.state.lists}
-    ]
     console.log(data);
     return (<>
      
@@ -106,7 +63,7 @@ render() {
         <Pie
           data={data}
           payload="name"
-          cx={350}
+          cx={300}
           cy={200}
           innerRadius={60}
           outerRadius={80}
@@ -122,25 +79,13 @@ render() {
           }
           
         </Pie>
-        <p> PUBLISHED VS UNPUBLISHED </p>
-        <Pie
-          data={data2}
-          cx={800}
-          cy={200}
-          startAngle={180}
-          endAngle={0}
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          paddingAngle={5}
-          dataKey="value"
-        >
-          {
-            data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-          }
-        </Pie>
       </PieChart>
       </>
     );
   }
 }
+
+
+
+
+  

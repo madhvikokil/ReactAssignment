@@ -6,7 +6,7 @@ class AddPost extends React.Component {
     render(){
         return(
            <div>
-                <h1> Add new Post </h1>
+                <h1> Post </h1><br/>
                 <HtmlEditor {...this.props} />
             </div>
         )
