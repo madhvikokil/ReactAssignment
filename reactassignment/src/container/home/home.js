@@ -34,12 +34,16 @@ class Home extends Component{
                 <Menu>
                 {
                 this.state.publishedPosts.map(data => (
+                    
                     <Menu.Item name={data.title}
                     as={Link} to ={`/publicPosts/${data.id}`}
                     />))
+                    
                 }
                 </Menu>
+                
                 <Route path="/publicPosts/:id" component={PublicPost}/>
+               
             </div>
                
          )

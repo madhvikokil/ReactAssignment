@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{lazy,Suspense}from 'react';
 import HeaderElement from './UI/headerElement/headerElement';
 import './App.css';
 import { BrowserRouter,Route,Switch } from 'react-router-dom';
@@ -7,12 +7,11 @@ import { connect } from 'react-redux';
 import * as actions from './store/actions/auth/auth';
 import Auth from './container/Auth/Auth';
 import AuthSignup from './container/AuthSignup/AuthSignup';
-import Dashboard from './component/dashboard/dashboard';
-import Modal from './component/Modal/Modal';
 import NotFound from './hoc/notFound/notFound';
 import Home from './container/home/home';
-import Charts from './component/Charts/Chart';
-import ChartsShown from './component/Charts/ChartsShown';
+const Dashboard = lazy(() => import('./component/dashboard/dashboard'))
+const Modal = lazy(() => import('./component/Modal/Modal'))
+const ChartsShown = lazy(() => import('./component/Charts/ChartsShown'))
 
 class App extends React.Component{
   componentDidMount() {
@@ -39,9 +38,9 @@ render(){
          
          <Route path = "/aboutus" exact render={(() =><h1> About Us</h1> )}/>
          <Route path = "/contactus" exact render={(() =><h1> Contact Us</h1> )}/>
-         <Route path = "/dashboard" component={Dashboard}/>
-         <Route path = "/dashboard/preview" component={Modal} />
-         <Route path="/app/charts" component={ChartsShown} />
+         <Route path = "/dashboard" render={() =><Dashboard/>}/>
+         <Route path = "/dashboard/preview" render={() =><Modal/>} />
+         <Route path="/app/charts" render={() =><ChartsShown/>} />
          {/* <Route path = "/publicPosts/:id" component={PreviewData} /> */}
          <Route path = "/logout" component={Logout}/>
          <Route path = "/" component={Home} />
@@ -59,7 +58,10 @@ return(
     <BrowserRouter> 
       <div className="App">
       <HeaderElement />
-         {routes}
+      <Suspense fallback={<p>Loading...</p>}>
+      {routes}
+      </Suspense>
+         
       </div>
     </BrowserRouter>
   )

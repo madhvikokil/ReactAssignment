@@ -1,8 +1,8 @@
-import React ,{useState,useEffect} from 'react';
+import React ,{useState,useEffect,useMemo} from 'react';
 import Axios from '../../axios-orders';
 import { withRouter } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import Child from './Child';
 
 
 const PublicPosts =(props)=> {
@@ -24,6 +24,10 @@ const PublicPosts =(props)=> {
            
             })},[props.match.params.id])
 
+         const memoChild = useMemo(() => {
+             return <Child />
+         },[props.match.params.id])
+            
         
             return(
             
@@ -35,7 +39,7 @@ const PublicPosts =(props)=> {
                         </div></p>
                         <p><b>Created Date :</b> {createdDate}</p>
                         <p><b>Updated Date :</b> {updatedDate}</p>
-                        
+                        {memoChild}
                     </div>
             )
         }

@@ -15,20 +15,12 @@ class Dashboard extends React.Component{
         console.log("fteched data");
     }
 
-     clickHandler=()=> {
-        this.props.history.push('/dashboard/posts');
-    }
-    
-    render(){
+   render(){
         
         const userid=localStorage.getItem('userId');
         const token= localStorage.getItem('token');
         console.log("userId: ",userid);
         console.log("token: ",token);
-
-        // if('/dashboard'){
-        //     showButton = <button onClick={this.clickHandler}> See Posts </button>
-        // }
 
         return(
            <div className="example">
